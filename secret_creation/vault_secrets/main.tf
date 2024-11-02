@@ -121,3 +121,22 @@ resource "vault_generic_secret" "rabbitmq" {
 }
 EOT
 }
+
+############### In the ansible pull, we are harding the password, and the below one is moving that to vault
+resource "vault_mount" "infra-secrets" {
+  path        = "infra-secrets"
+  type        = "kv"
+  options     = { version = "2" }
+  description = "All Infra Related Secrets"
+}
+
+resource "vault_generic_secret" "ssh" {
+  path = "${vault_mount.infra-secrets.path}/ssh"
+
+  data_json = <<EOT
+{
+  "username" : "ec2-user",
+  "password" : "DevOps321"
+}
+EOT
+}
