@@ -46,7 +46,7 @@ resource "aws_instance" "inst" {
 # Creating 2 records, using public i can access thru browser
 resource "aws_route53_record" "record-public" {
   zone_id = var.zone_id
-  name    = "${var.tool_name}-.${var.domain_name}"
+  name    = "${var.tool_name}.${var.domain_name}"
   type    = "A"
   ttl     = "30"
   records = [aws_instance.inst.public_ip]
@@ -55,7 +55,7 @@ resource "aws_route53_record" "record-public" {
 
 resource "aws_route53_record" "record-internal" {
   zone_id = var.zone_id
-  name    = "${var.tool_name}-.${var.domain_name}"
+  name    = "${var.tool_name}-internal.${var.domain_name}"
   type    = "A"
   ttl     = "30"
   records = [aws_instance.inst.private_ip]
