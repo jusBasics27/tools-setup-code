@@ -40,6 +40,9 @@ resource "aws_instance" "inst" {
   tags={
     Name=var.tool_name
   }
+  root_block_device {  # This is give the volume size of the machine like 20GB/40GB
+    volume_size = var.volume_size
+  }
 }
 
 
