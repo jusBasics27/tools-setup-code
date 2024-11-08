@@ -4,6 +4,9 @@
 # gh auth login -s admin:org
 
 #my note: This yml is to connect the created github-runner instance to the github action
+ #Get token:here the 'token' is the variable that takes the values of token comes from jq.token, gh api will give the json as output and
+# jq [jsonquery] get the values of token only separated and stored in token which will be used in next step
+# Register runner : token.stdout bring the value of token from above step
 
 
 - name: Set Prompt
@@ -33,15 +36,14 @@
     name: libicu
     state: installed
 
-#here the 'token' is the variable that takes the values of token comes from jq.token, gh api will give the json as output and
-# jq [jsonquery] get the values of token only separated and stored in token which will be used in next step
+
 - name: Get token
   ansible.builtin.shell: |
     gh api --method POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/jusBasics27/actions/runners/registration-token | jq .token
   register: token
   become_user: ec2-user
 
-#token.stdout bring the value of token from above step
+
 - name: Register runner
   ansible.builtin.shell: |
     ./config.sh --unattended --url https://github.com/jusBasics27 --token {{ token.stdout }}  --name {{ ansible_hostname }} --runnergroup Default
