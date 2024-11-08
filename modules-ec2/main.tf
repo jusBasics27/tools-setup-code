@@ -43,6 +43,13 @@ resource "aws_instance" "inst" {
   root_block_device {  # This is give the volume size of the machine like 20GB/40GB
     volume_size = var.volume_size
   }
+  instance_market_options {  # Create SPOT instances
+    market_type = "spot"
+    spot_options {
+      instance_interruption_behavior = "stop"
+      spot_instance_type = "persistent"
+    }
+  }
 }
 
 
