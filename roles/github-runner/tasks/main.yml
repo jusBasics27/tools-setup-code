@@ -1,4 +1,4 @@
-# Following steps need to be run manually as ec2-user
+# Following steps need to be run manually as ec2-user in github-runner instance [ for every new github-runner instances created]
 # sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
 # sudo dnf install gh -y
 # gh auth login -s admin:org
