@@ -56,3 +56,8 @@ resource "aws_iam_instance_profile" "instance_profile" {
 # ]
 
 # aws_iam_instance_profile: if u want to attach a role to instance, we need this part
+
+# we dont want to apply this role and policy to VAULT instance, so we do this count logic
+# count = length(var.policy_list) > 0 ? 1 : 0
+
+# When we create a role, we need to create a policy and since its this role is for ec2 instance, we need to create a instance profile “aws_iam_instance_profile”
