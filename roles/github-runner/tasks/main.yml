@@ -1,0 +1,73 @@
+# Following steps need to be run manually as ec2-user
+# sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
+# sudo dnf install gh -y
+# gh auth login -s admin:org
+
+#my note: This yml is to connect the created github-runner instance to the github action
+
+
+- name: Set Prompt
+  ansible.builtin.shell: set-prompt {{ tool_name }}
+
+- name: Add github runner user
+  ansible.builtin.user:
+    name: github-runner
+
+- name: Create runner directory
+  ansible.builtin.file:
+    path: /actions-runner
+    state: directory
+    owner: github-runner
+    group: github-runner
+
+- name: Download Runner
+  ansible.builtin.unarchive:
+    src: https://github.com/actions/runner/releases/download/v2.320.0/actions-runner-linux-x64-2.320.0.tar.gz
+    dest: /actions-runner
+    remote_src: yes
+    owner: github-runner
+    group: github-runner
+
+- name: Install libicu
+  ansible.builtin.dnf:
+    name: libicu
+    state: installed
+
+#here the 'token' is the variable that takes the values of token comes from jq.token, gh api will give the json as output and
+# jq [jsonquery] get the values of token only separated and stored in token which will be used in next step
+- name: Get token
+  ansible.builtin.shell: |
+    gh api --method POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/jusBasics27/actions/runners/registration-token | jq .token
+  register: token
+  become_user: ec2-user
+
+#token.stdout bring the value of token from above step
+- name: Register runner
+  ansible.builtin.shell: |
+    ./config.sh --unattended --url https://github.com/jusBasics27 --token {{ token.stdout }}  --name {{ ansible_hostname }} --runnergroup Default
+  become_user: github-runner
+  args:
+    chdir: /actions-runner
+  ignore_errors: yes
+
+- name: Copy Service file
+  ansible.builtin.copy:
+    src: github-runner.service
+    dest: /etc/systemd/system/github-runner.service
+
+- name: Start Runner service
+  ansible.builtin.systemd_service:
+    name: github-runner
+    daemon-reload: yes
+    enabled: yes
+    state: restarted
+
+- name: Copy terraform repo
+  ansible.builtin.get_url:
+    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    dest: /etc/yum.repos.d/hashicorp.repo
+
+- name: Install Terraform
+  ansible.builtin.dnf:
+    name: terraform
+    state: installed

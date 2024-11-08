@@ -1,0 +1,14 @@
+[Unit]
+Description=GitHub Actions Runner (jusbasics27.ip-172-31-42-37)
+After=network.target
+
+[Service]
+ExecStart=/actions-runner/run.sh
+User=github-runner
+WorkingDirectory=/actions-runner
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=5min
+
+[Install]
+WantedBy=multi-user.target
