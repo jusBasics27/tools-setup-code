@@ -50,8 +50,9 @@ resource "aws_instance" "inst" {
       spot_instance_type = "persistent"
     }
   }
+  iam_instance_profile = length(var.policy_list) > 0 ? aws_iam_instance_profile.instance_profile[0].name : null
 }
-
+# note: iam_instance_profile this is to attach the instance profile role to instance
 
 # Creating 2 records, using public i can access thru browser
 resource "aws_route53_record" "record-public" {
