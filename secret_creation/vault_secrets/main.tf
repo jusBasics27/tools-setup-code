@@ -32,15 +32,15 @@ resource "vault_generic_secret" "frontend" {
   "user_url":   "http://user-dev.waferhassan.online:8080/",
   "shipping_url":   "http://shipping-dev.waferhassan.online:8080/",
   "payment_url":   "http://payment-dev.waferhassan.online:8080/",
-  "CATALOGUE_HOST" : "catalogue-dev.rdevopsb81.online",
+  "CATALOGUE_HOST" : "catalogue-dev.waferhassan.online",
   "CATALOGUE_PORT" : 8080,
-  "USER_HOST" : "user-dev.rdevopsb81.online",
+  "USER_HOST" : "user-dev.waferhassan.online",
   "USER_PORT" : 8080,
-  "CART_HOST" : "cart-dev.rdevopsb81.online",
+  "CART_HOST" : "cart-dev.waferhassan.online",
   "CART_PORT" : 8080,
-  "SHIPPING_HOST" : "shipping-dev.rdevopsb81.online",
+  "SHIPPING_HOST" : "shipping-dev.waferhassan.online",
   "SHIPPING_PORT" : 8080,
-  "PAYMENT_HOST" : "payment-dev.rdevopsb81.online",
+  "PAYMENT_HOST" : "payment-dev.waferhassan.online",
   "PAYMENT_PORT" : 8080
 }
 EOT
