@@ -42,7 +42,11 @@ resource "vault_generic_secret" "catalogue" {
   data_json = <<EOT
 {
   "MONGO": "true",
-  "MONGO_URL" : "mongodb://mongodb-dev.waferhassan.online:27017/catalogue"
+  "MONGO_URL" : "mongodb://mongodb-dev.waferhassan.online:27017/catalogue",
+  "DB_TYPE": "mongo",
+  "APP_GIT_URL": "https://github.com/roboshop-devops-project-v3/catalogue",
+  "DB_HOST": "mongodb-dev.waferhassan.online",
+  "SCHEMA_FILE": "db/master-data.js"
 }
 EOT
 }
@@ -78,7 +82,11 @@ resource "vault_generic_secret" "shipping" {
 {
   "CART_ENDPOINT": "cart-dev.waferhassan.online:8080",
   "DB_HOST" : "mysql-dev.waferhassan.online",
-  "mysql_root_password" : "RoboShop@1"
+  "mysql_root_password" : "RoboShop@1",
+  "DB_TYPE": "mysql",
+  "APP_GIT_URL": "https://github.com/roboshop-devops-project-v3/shipping",
+  "DB_USER": "root",
+  "DB_PASS": "RoboShop@1"
 }
 EOT
 }
