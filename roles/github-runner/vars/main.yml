@@ -2,7 +2,7 @@ lv_input:
   - { lv: auditVol,   size: 4.4 }
   - { lv: homeVol,    size: 10 }
   - { lv: logVol,     size: 2 }
-  - { lv: rootVol,    size: 6 }
+  - { lv: rootVol,    size: 16 }
   - { lv: swapVol,    size: 2 }
   - { lv: varTmpVol,  size: 2 }
   - { lv: varVol,     size: 10 }
