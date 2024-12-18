@@ -2,6 +2,10 @@
   ansible.builtin.shell: growpart /dev/nvme0n1 4
   ignore_errors: yes
 
+- name: Resize Physical Volume
+  ansible.builtin.shell: pvresize /dev/nvme0n1p4
+  ignore_errors: yes
+
 - name: Increase LVM
   ansible.builtin.shell: lvextend -r -L {{item.size}}G /dev/mapper/RootVG-{{item.lv}}
   loop: "{{ lv_input }}"
