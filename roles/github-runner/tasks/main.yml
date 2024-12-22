@@ -97,3 +97,8 @@
     name: common
     tasks_from: lvm
 
+- name: Install ArgoCD Cli
+  ansible.builtin.get_url:
+    url: https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    dest: /bin/argocd
+    mode: '0755'
