@@ -37,8 +37,8 @@
 #    dest: /etc/logstash/conf.d/logstash.conf
 
 - name: Start ELK
-  tags:
-    - elk
+#  tags:
+#    - elk
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: restarted
