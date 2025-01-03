@@ -14,6 +14,13 @@ variable "tools" {
       instance_type="t3.small"
       policy_list = ["*"]
     }
+
+    elasticsearch ={
+      port=80
+      volume_size=50
+      instance_type="r6idn.large"
+      policy_list = []
+    }
   }
 }
 
