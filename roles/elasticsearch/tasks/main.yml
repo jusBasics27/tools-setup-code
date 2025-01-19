@@ -49,15 +49,15 @@
     - logstash
     - nginx
 
-#- name: Restart Logstash
+- name: Restart Logstash
 #  tags:
 #    - logstash
-#  ansible.builtin.systemd_service:
-#    name: "{{ item }}"
-#    state: restarted
-#    enabled: yes
-#  loop:
-#    - logstash
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  loop:
+    - logstash
 
 
 
